@@ -1,12 +1,20 @@
+<%- include('../partials/header') %>
+
 <h1>Camp Days</h1>
+
+<% if (isAdmin) { %>
 <a href="/campdays/new">+ New Camp Day</a>
+<% } %>
+
 <ul>
   <% days.forEach(day => { %>
   <li>
     <a href="/campdays/<%= day._id %>"><%= day.title %></a>
+    <% if (isAdmin) { %>
     <form action="/campdays/<%= day._id %>/delete" method="POST">
       <button>Delete</button>
     </form>
+    <% } %>
   </li>
   <% }) %>
 </ul>

@@ -23,8 +23,8 @@ router.post("/", isAdmin, async (req, res) => {
 
 // Перегляд конкретного дня
 router.get("/:id", async (req, res) => {
-  const day = await CampDay.findById(req.params.id);
-  res.render("campdays/show", { day });
+  const campDay = await CampDay.findById(req.params.id);
+  res.render("campdays/show", { campDay });
 });
 
 // Форма редагування

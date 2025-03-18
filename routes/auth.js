@@ -10,7 +10,7 @@ router.post("/login", (req, res) => {
 
   if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
     req.session.isAdmin = true;
-    res.redirect("/");
+    res.redirect("/campdays");
   } else {
     res.render("login", { error: "Invalid credentials" });
   }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title><%= campDay.title %> - Camp Schedule</title>
+    <%- include('../partials/header') %>
+  </head>
+  <body>
+    <h1><%= campDay.title %></h1>
+    <p><%= campDay.description %></p>
+
+    <h3>Schedule:</h3>
+    <ul>
+      <% campDay.schedule.forEach(function(item) { %>
+      <li><strong><%= item.time %>:</strong> <%= item.activity %></li>
+      <% }); %>
+    </ul>
+
+    <br />
+    <a href="/campdays">Back to Camp Days List</a>
+  </body>
+</html>

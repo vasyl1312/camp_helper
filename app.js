@@ -14,7 +14,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -30,7 +29,6 @@ app.use((req, res, next) => {
 
 const indexRoutes = require("./routes/index");
 const authRoutes = require("./routes/auth");
-const scheduleRouter = require("./routes/schedule");
 const campDaysRoutes = require("./routes/campDays");
 const aiRoutes = require("./routes/ai");
 
@@ -38,7 +36,6 @@ app.use("/campdays", campDaysRoutes);
 app.use("/ai", aiRoutes);
 app.use("/", indexRoutes);
 app.use("/auth", authRoutes);
-app.use("/schedule", scheduleRouter);
 
 const port = process.env.PORT || 3000;
 const start = async () => {
