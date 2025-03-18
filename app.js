@@ -30,11 +30,27 @@ app.use((req, res, next) => {
 
 const indexRoutes = require("./routes/index");
 const authRoutes = require("./routes/auth");
+const scheduleRouter = require("./routes/schedule");
+const campDaysRoutes = require("./routes/campDays");
+const aiRoutes = require("./routes/ai");
 
+app.use("/campdays", campDaysRoutes);
+app.use("/ai", aiRoutes);
 app.use("/", indexRoutes);
 app.use("/auth", authRoutes);
+app.use("/schedule", scheduleRouter);
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
-});
+const port = process.env.PORT || 3000;
+const start = async () => {
+  try {
+    await mongoose.connect(`${process.env.DB_URL}`);
+
+    app.listen(port, () => {
+      console.log(`Server listen on port ${port}`);
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+start();

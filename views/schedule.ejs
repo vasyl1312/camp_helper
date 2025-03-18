@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Schedule</title>
+  </head>
+  <body>
+    <h1>Camp Schedule</h1>
+
+    <ul>
+      <% schedule.forEach(function(item) { %>
+      <li><%= item.time %> - <%= item.activity %></li>
+      <% }); %>
+    </ul>
+
+    <% if (isAdmin) { %>
+    <h2>Edit Schedule</h2>
+    <form action="/schedule/edit" method="POST">
+      <input type="text" name="time" placeholder="Time" required />
+      <input type="text" name="activity" placeholder="Activity" required />
+      <button type="submit">Add Activity</button>
+    </form>
+    <% } else { %>
+    <p>Login as admin to edit the schedule.</p>
+    <% } %>
+
+    <a href="/">Back to Home</a>
+  </body>
+</html>
