@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index</title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+
+    <% if (isAdmin) { %>
+    <p>Welcome, Admin!</p>
+    <a href="/auth/logout">Logout</a>
+    <br />
+    <a href="/schedule">Go to Schedule (Edit Mode)</a>
+    <% } else { %>
+    <a href="/auth/login">Admin Login</a>
+    <br />
+    <a href="/schedule">View Schedule</a>
+    <% } %>
+  </body>
+</html>
