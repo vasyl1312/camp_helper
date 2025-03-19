@@ -7,7 +7,9 @@
 <% } %>
 
 <ul>
-  <% days.forEach(day => { %>
+  <% if (days.length === 0) { %>
+  <p>No camp days found.</p>
+  <% } %> <% days.forEach(day => { %>
   <li>
     <a href="/campdays/<%= day._id %>"><%= day.title %></a>
     <% if (isAdmin) { %>

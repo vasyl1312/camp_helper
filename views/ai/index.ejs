@@ -1,0 +1,8 @@
+<%- include('../partials/header') %>
+
+<h1>AI Idea Generator</h1>
+<form action="/ai/generate" method="POST">
+  <label>Тема дня:</label>
+  <input type="text" name="theme" placeholder="Наприклад: Пірати" required />
+  <button type="submit">Згенерувати ідеї</button>
+</form>

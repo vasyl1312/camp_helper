@@ -1,23 +1,68 @@
 const express = require("express");
 const router = express.Router();
-const CampDay = require("../models/CampDay");
+const axios = require("axios");
+require("dotenv").config(); // Підключення dotenv для роботи з змінними середовища
+
 const AIRequest = require("../models/AIRequest");
+const isAdmin = require("../middleware/isAdmin");
 
-// const openai = require('../utils/openai'); // Пізніше додамо
+router.get("/", isAdmin, (req, res) => {
+  res.render("ai/index");
+});
 
-router.get("/analyze/:id", async (req, res) => {
-  const day = await CampDay.findById(req.params.id);
+router.post("/generate", isAdmin, async (req, res) => {
+  const { theme, campDayId } = req.body;
 
-  // Тут виклик до OpenAI API (поки хардкод)
-  const aiResponse = `AI аналіз розкладу "${day.title}" - все чудово!`;
+  const systemPrompt =
+    "Ти досвідчений організатор дитячих таборів. Генеруй цікаві ідеї активностей для тематичних днів табору.";
+  const userPrompt = `Запропонуй ідеї для тематичного дня: "${theme}".`;
 
-  await AIRequest.create({
-    campDayId: day._id,
-    prompt: "Analyze this schedule...",
-    aiResponse,
-  });
+  try {
+    const response = await axios.post(
+      "https://models.inference.ai.azure.com/chat/completions",
+      {
+        messages: [
+          {
+            role: "system",
+            content: systemPrompt,
+          },
+          {
+            role: "user",
+            content: userPrompt,
+          },
+        ],
+        model: "gpt-4o-mini",
+        temperature: 1,
+        max_tokens: 4096,
+        top_p: 1,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
-  res.render("ai/analyze", { day, aiResponse });
+    // Отримуємо відповідь від AI
+    const aiResponse = response.data.choices[0].message.content;
+
+    // Зберігаємо запит у базі даних (якщо потрібно)
+    // const newAIRequest = new AIRequest({
+    //   theme,
+    //   campDayId,
+    //   response: aiResponse,
+    // });
+    // await newAIRequest.save();
+
+    res.render("ai/result", { aiResponse });
+
+    // Відправляємо відповідь клієнту
+    // res.json({ success: true, response: aiResponse });
+  } catch (error) {
+    console.error("Помилка при запиті до AI:", error);
+    res.status(500).json({ success: false, message: "Помилка при генерації ідей" });
+  }
 });
 
 module.exports = router;
