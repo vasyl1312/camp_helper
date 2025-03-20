@@ -16,6 +16,22 @@
       <% }); %>
     </ul>
 
+    <% if (isAdmin) { %>
+    <!-- Кнопка редагування -->
+    <a href="/campdays/<%= campDay._id %>/edit" class="btn btn-warning">Редагувати розклад</a>
+
+    <br />
+    <!-- Кнопка запуску аналізу ШІ -->
+    <form action="/ai/analyze-campday/<%= campDay._id %>" method="POST" style="display: inline">
+      <button type="submit" class="btn btn-primary">Аналізувати розклад ШІ</button>
+    </form>
+
+    <!-- Кнопка видалення -->
+
+    <form action="/campdays/<%= campDay._id %>/delete" method="POST">
+      <button>Delete</button>
+    </form>
+    <% } %>
     <br />
     <a href="/campdays">Back to Camp Days List</a>
   </body>

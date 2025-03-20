@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit Camp Day</title>
+    <%- include('../partials/header') %>
+  </head>
+  <body>
+    <h1>Edit Camp Day</h1>
+
+    <form action="/campdays/<%= campDay._id %>?_method=PUT" method="POST">
+      <label for="title">Title (Theme of the Day):</label><br />
+      <input
+        type="text"
+        id="title"
+        name="title"
+        value="<%= campDay.title %>"
+        required
+      /><br /><br />
+
+      <label for="description">Description:</label><br />
+      <textarea
+        id="description"
+        name="description"
+        rows="5"
+        cols="40"
+        placeholder="Optional general description..."
+      >
+<%= campDay.description %></textarea
+      ><br /><br />
+
+      <h3>Schedule Entries:</h3>
+      <div id="schedule-container">
+        <% if (campDay.schedule && campDay.schedule.length > 0) { %> <%
+        campDay.schedule.forEach((item, index) => { %>
+        <div class="schedule-item">
+          <label for="time-<%= index %>">Time:</label>
+          <input
+            type="text"
+            name="schedule[<%= index %>][time]"
+            id="time-<%= index %>"
+            value="<%= item.time %>"
+            required
+          /><br />
+
+          <label for="activity-<%= index %>">Activity:</label>
+          <input
+            type="text"
+            name="schedule[<%= index %>][activity]"
+            id="activity-<%= index %>"
+            value="<%= item.activity %>"
+            required
+          /><br /><br />
+        </div>
+        <% }) %> <% } else { %>
+        <!-- Якщо порожній, додати один блок -->
+        <div class="schedule-item">
+          <label for="time-0">Time:</label>
+          <input
+            type="text"
+            name="schedule[0][time]"
+            id="time-0"
+            placeholder="8:30-9:00"
+            required
+          /><br />
+
+          <label for="activity-0">Activity:</label>
+          <input
+            type="text"
+            name="schedule[0][activity]"
+            id="activity-0"
+            placeholder="Wake Up"
+            required
+          /><br /><br />
+        </div>
+        <% } %>
+      </div>
+
+      <button type="button" onclick="addScheduleItem()">+ Add Activity</button><br /><br />
+
+      <button type="submit">Save Changes</button>
+    </form>
+
+    <!-- Блок з пропозиціями від AI -->
+    <% if (typeof aiResponse !== "undefined") { %>
+    <hr />
+    <h2>AI Suggestions:</h2>
+    <div style="background: #f0f0f0; padding: 15px; border-radius: 8px">
+      <%= aiResponse.replace(/\n/g, "<br />") %>
+    </div>
+    <br />
+    <% } %>
+
+    <!-- Кнопка для аналізу розкладу ШІ -->
+    <form action="/ai/analyze-campday/<%= campDay._id %>" method="POST">
+      <button type="submit">Analyze Schedule with AI</button>
+    </form>
+
+    <br /><a href="/campdays">← Back to Camp Days List</a>
+
+    <script>
+      let scheduleIndex = <%= campDay.schedule ? campDay.schedule.length : 1 %>;
+
+      function addScheduleItem() {
+        const container = document.getElementById("schedule-container");
+        const div = document.createElement("div");
+        div.classList.add("schedule-item");
+        div.innerHTML = `
+          <label for="time-${scheduleIndex}">Time:</label>
+          <input type="text" name="schedule[${scheduleIndex}][time]" id="time-${scheduleIndex}" placeholder="Time (e.g., 9:00-9:30)" required><br>
+
+          <label for="activity-${scheduleIndex}">Activity:</label>
+          <input type="text" name="schedule[${scheduleIndex}][activity]" id="activity-${scheduleIndex}" placeholder="Activity" required><br><br>
+        `;
+        container.appendChild(div);
+        scheduleIndex++;
+      }
+    </script>
+  </body>
+</html>

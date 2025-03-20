@@ -29,8 +29,8 @@ router.get("/:id", async (req, res) => {
 
 // Форма редагування
 router.get("/:id/edit", isAdmin, async (req, res) => {
-  const day = await CampDay.findById(req.params.id);
-  res.render("campdays/edit", { day });
+  const campDay = await CampDay.findById(req.params.id);
+  res.render("campdays/edit", { campDay });
 });
 
 // Оновлення

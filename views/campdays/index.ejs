@@ -12,11 +12,6 @@
   <% } %> <% days.forEach(day => { %>
   <li>
     <a href="/campdays/<%= day._id %>"><%= day.title %></a>
-    <% if (isAdmin) { %>
-    <form action="/campdays/<%= day._id %>/delete" method="POST">
-      <button>Delete</button>
-    </form>
-    <% } %>
   </li>
   <% }) %>
 </ul>
