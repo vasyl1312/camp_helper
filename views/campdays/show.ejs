@@ -26,8 +26,14 @@
       <button type="submit" class="btn btn-primary">Аналізувати розклад ШІ</button>
     </form>
 
-    <!-- Кнопка видалення -->
+    <br />
+    <!-- Кнопка виклику генерації соцконтенту -->
+    <form action="/ai/social-content" method="POST" style="margin-top: 20px">
+      <input type="hidden" name="campDayId" value="<%= campDay._id %>" />
+      <button type="submit">Згенерувати пост для Instagram / Facebook</button>
+    </form>
 
+    <!-- Кнопка видалення -->
     <form action="/campdays/<%= campDay._id %>/delete" method="POST">
       <button>Delete</button>
     </form>
