@@ -16,8 +16,8 @@ router.get("/new", isAdmin, (req, res) => {
 
 // Створення дня
 router.post("/", isAdmin, async (req, res) => {
-  const { title, description, schedule } = req.body;
-  await CampDay.create({ title, description, schedule });
+  const { title, description } = req.body;
+  await CampDay.create({ title, description });
   res.redirect("/campdays");
 });
 

@@ -1,74 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create New Camp Day</title>
+    <link rel="stylesheet" href="/styles.css" />
     <%- include('../partials/header') %>
 
+    <script
+      src="https://cdn.tiny.cloud/1/rx6xk6mv45iri6dzpeflijn3byyjwl4yp4888s5q313fkgba/tinymce/7/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
+
+    <script>
+      tinymce.init({
+        selector: "#description",
+        plugins:
+          "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount preview",
+        toolbar:
+          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat |preview",
+        setup: function (editor) {
+          editor.on("change", function () {
+            tinymce.triggerSave(); // Save the content of the editor to the textarea before form submission
+          });
+        },
+      });
+    </script>
   </head>
+
   <body>
     <h1>Create New Camp Day</h1>
     <form action="/campdays" method="POST">
-      <label for="title">Title (Theme of the Day):</label><br />
-      <input type="text" id="title" name="title" required /><br /><br />
+      <label for="title">Title (Theme of the Day):</label>
+      <input type="text" id="title" name="title" required />
 
-      <label for="description">Description:</label><br />
+      <label for="description">Description:</label>
       <textarea
         id="description"
         name="description"
         rows="5"
-        cols="40"
-        placeholder="Optional general description..."
-      ></textarea
-      ><br /><br />
+        placeholder="Here you can create your schedule, tables, description for activities and add photos or videos"
+      >
+      </textarea>
 
-      <h3>Schedule Entries:</h3>
-      <div id="schedule-container">
-        <div class="schedule-item">
-          <label for="time-0">Time:</label>
-          <input
-            type="text"
-            name="schedule[0][time]"
-            id="time-0"
-            placeholder="8:30-9:00"
-            required
-          /><br />
-
-          <label for="activity-0">Activity:</label>
-          <input
-            type="text"
-            name="schedule[0][activity]"
-            id="activity-0"
-            placeholder="Wake Up"
-            required
-          /><br /><br />
-        </div>
-      </div>
-
-      <button type="button" onclick="addScheduleItem()">+ Add Activity</button><br /><br />
-
+      <br />
       <button type="submit">Create Camp Day</button>
     </form>
-
-    <script>
-      let scheduleIndex = 1;
-
-      // Функція для динамічного додавання нових полів
-      function addScheduleItem() {
-        const container = document.getElementById("schedule-container");
-        const div = document.createElement("div");
-        div.classList.add("schedule-item");
-        div.innerHTML = `
-        <label for="time-${scheduleIndex}">Time:</label>
-        <input type="text" name="schedule[${scheduleIndex}][time]" id="time-${scheduleIndex}" placeholder="Time (e.g., 9:00-9:30)" required><br>
-        
-        <label for="activity-${scheduleIndex}">Activity:</label>
-        <input type="text" name="schedule[${scheduleIndex}][activity]" id="activity-${scheduleIndex}" placeholder="Activity" required><br><br>
-      `;
-        container.appendChild(div);
-        scheduleIndex++;
-      }
-    </script>
 
     <br /><a href="/campdays">← Back to Camp Days List</a>
   </body>
