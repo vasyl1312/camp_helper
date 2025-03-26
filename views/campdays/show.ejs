@@ -14,6 +14,7 @@
         selector: "textarea",
         menubar: false,
         statusbar: false,
+        editable_root: false,
         plugins: "fullscreen",
         toolbar: "fullscreen ",
       });
@@ -31,7 +32,7 @@
     <br />
     <!-- Кнопка запуску аналізу ШІ -->
     <form action="/ai/analyze-campday/<%= campDay._id %>" method="POST" style="display: inline">
-      <button type="submit" class="btn btn-primary">Аналізувати розклад ШІ</button>
+      <button type="submit" class="btn btn-primary">Аналізувати цей день за допомогою ШІ</button>
     </form>
 
     <br />
@@ -41,9 +42,12 @@
       <button type="submit">Згенерувати пост для Instagram / Facebook</button>
     </form>
 
+    <br />
+    <br />
+
     <!-- Кнопка видалення -->
     <form action="/campdays/<%= campDay._id %>/delete" method="POST">
-      <button>Delete</button>
+      <button style="background-color: crimson">Delete</button>
     </form>
     <% } %>
     <br />
