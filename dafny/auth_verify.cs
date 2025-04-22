@@ -12,9 +12,61 @@ using System.Collections;
 // Command-line arguments: run auth_verify.dfy
 // auth_verify.dfy
 
-method Main(_noArgsParameter: seq<seq<char>>)
+method TestLoginSuccess()
 {
-  print ""Hallo, Welt!"";
+  var sys := new AuthSystem(""admin"", ""1234"");
+  var r := sys.Login(""admin"", ""1234"");
+  assert r == Success;
+}
+
+method TestLoginFailure()
+{
+  var sys := new AuthSystem(""admin"", ""1234"");
+  var r := sys.Login(""user"", ""wrong"");
+  assert r == Failure;
+}
+
+lemma LoginSpec(sys: AuthSystem, u: string, p: string)
+  requires u != """" && p != """"
+  ensures sys.LoginPure(u, p) == if u == sys.adminUsername && p == sys.adminPassword then Success else Failure
+  decreases sys, u, p
+{
+}
+
+datatype LoginResult = Success | Failure
+
+class AuthSystem {
+  var adminUsername: string
+  var adminPassword: string
+
+  constructor (username: string, password: string)
+    requires username != """" && password != """"
+    ensures adminUsername == username
+    ensures adminPassword == password
+    decreases username, password
+  {
+    adminUsername := username;
+    adminPassword := password;
+  }
+
+  function LoginPure(inputUsername: string, inputPassword: string): LoginResult
+    requires inputUsername != """" && inputPassword != """"
+    reads this
+    decreases {this}, inputUsername, inputPassword
+  {
+    if inputUsername == adminUsername && inputPassword == adminPassword then
+      Success
+    else
+      Failure
+  }
+
+  method Login(inputUsername: string, inputPassword: string) returns (result: LoginResult)
+    requires inputUsername != """" && inputPassword != """"
+    ensures result == LoginPure(inputUsername, inputPassword)
+    decreases inputUsername, inputPassword
+  {
+    result := LoginPure(inputUsername, inputPassword);
+  }
 }
 ")]
 
@@ -5684,19 +5736,138 @@ internal static class FuncExtensions {
   public static Func<UResult> DowncastClone<TResult, UResult>(this Func<TResult> F, Func<TResult, UResult> ResConv) {
     return () => ResConv(F());
   }
+  public static Func<U1, U2, UResult> DowncastClone<T1, T2, TResult, U1, U2, UResult>(this Func<T1, T2, TResult> F, Func<U1, T1> ArgConv1, Func<U2, T2> ArgConv2, Func<TResult, UResult> ResConv) {
+    return (arg1, arg2) => ResConv(F(ArgConv1(arg1), ArgConv2(arg2)));
+  }
 }
 // end of class FuncExtensions
 namespace _module {
 
   public partial class __default {
-    public static void _Main(Dafny.ISequence<Dafny.ISequence<Dafny.Rune>> __noArgsParameter)
+    public static void TestLoginSuccess()
     {
-      Dafny.Helpers.Print((Dafny.Sequence<Dafny.Rune>.UnicodeFromString("Hallo, Welt!")).ToVerbatimString(false));
+      AuthSystem _0_sys;
+      AuthSystem _nw0 = new AuthSystem();
+      _nw0.__ctor(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("admin"), Dafny.Sequence<Dafny.Rune>.UnicodeFromString("1234"));
+      _0_sys = _nw0;
+      _ILoginResult _1_r;
+      _ILoginResult _out0;
+      _out0 = (_0_sys).Login(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("admin"), Dafny.Sequence<Dafny.Rune>.UnicodeFromString("1234"));
+      _1_r = _out0;
+    }
+    public static void TestLoginFailure()
+    {
+      AuthSystem _0_sys;
+      AuthSystem _nw0 = new AuthSystem();
+      _nw0.__ctor(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("admin"), Dafny.Sequence<Dafny.Rune>.UnicodeFromString("1234"));
+      _0_sys = _nw0;
+      _ILoginResult _1_r;
+      _ILoginResult _out0;
+      _out0 = (_0_sys).Login(Dafny.Sequence<Dafny.Rune>.UnicodeFromString("user"), Dafny.Sequence<Dafny.Rune>.UnicodeFromString("wrong"));
+      _1_r = _out0;
+    }
+  }
+
+  public interface _ILoginResult {
+    bool is_Success { get; }
+    bool is_Failure { get; }
+    _ILoginResult DowncastClone();
+  }
+  public abstract class LoginResult : _ILoginResult {
+    public LoginResult() {
+    }
+    private static readonly _ILoginResult theDefault = create_Success();
+    public static _ILoginResult Default() {
+      return theDefault;
+    }
+    private static readonly Dafny.TypeDescriptor<_ILoginResult> _TYPE = new Dafny.TypeDescriptor<_ILoginResult>(LoginResult.Default());
+    public static Dafny.TypeDescriptor<_ILoginResult> _TypeDescriptor() {
+      return _TYPE;
+    }
+    public static _ILoginResult create_Success() {
+      return new LoginResult_Success();
+    }
+    public static _ILoginResult create_Failure() {
+      return new LoginResult_Failure();
+    }
+    public bool is_Success { get { return this is LoginResult_Success; } }
+    public bool is_Failure { get { return this is LoginResult_Failure; } }
+    public static System.Collections.Generic.IEnumerable<_ILoginResult> AllSingletonConstructors {
+      get {
+        yield return LoginResult.create_Success();
+        yield return LoginResult.create_Failure();
+      }
+    }
+    public abstract _ILoginResult DowncastClone();
+  }
+  public class LoginResult_Success : LoginResult {
+    public LoginResult_Success() : base() {
+    }
+    public override _ILoginResult DowncastClone() {
+      if (this is _ILoginResult dt) { return dt; }
+      return new LoginResult_Success();
+    }
+    public override bool Equals(object other) {
+      var oth = other as LoginResult_Success;
+      return oth != null;
+    }
+    public override int GetHashCode() {
+      ulong hash = 5381;
+      hash = ((hash << 5) + hash) + 0;
+      return (int) hash;
+    }
+    public override string ToString() {
+      string s = "LoginResult.Success";
+      return s;
+    }
+  }
+  public class LoginResult_Failure : LoginResult {
+    public LoginResult_Failure() : base() {
+    }
+    public override _ILoginResult DowncastClone() {
+      if (this is _ILoginResult dt) { return dt; }
+      return new LoginResult_Failure();
+    }
+    public override bool Equals(object other) {
+      var oth = other as LoginResult_Failure;
+      return oth != null;
+    }
+    public override int GetHashCode() {
+      ulong hash = 5381;
+      hash = ((hash << 5) + hash) + 1;
+      return (int) hash;
+    }
+    public override string ToString() {
+      string s = "LoginResult.Failure";
+      return s;
+    }
+  }
+
+  public partial class AuthSystem {
+    public AuthSystem() {
+      this.adminUsername = Dafny.Sequence<Dafny.Rune>.Empty;
+      this.adminPassword = Dafny.Sequence<Dafny.Rune>.Empty;
+    }
+    public Dafny.ISequence<Dafny.Rune> adminUsername {get; set;}
+    public Dafny.ISequence<Dafny.Rune> adminPassword {get; set;}
+    public void __ctor(Dafny.ISequence<Dafny.Rune> username, Dafny.ISequence<Dafny.Rune> password)
+    {
+      (this).adminUsername = username;
+      (this).adminPassword = password;
+    }
+    public _ILoginResult LoginPure(Dafny.ISequence<Dafny.Rune> inputUsername, Dafny.ISequence<Dafny.Rune> inputPassword)
+    {
+      if (((inputUsername).Equals(this.adminUsername)) && ((inputPassword).Equals(this.adminPassword))) {
+        return _module.LoginResult.create_Success();
+      } else {
+        return _module.LoginResult.create_Failure();
+      }
+    }
+    public _ILoginResult Login(Dafny.ISequence<Dafny.Rune> inputUsername, Dafny.ISequence<Dafny.Rune> inputPassword)
+    {
+      _ILoginResult result = LoginResult.Default();
+      result = (this).LoginPure(inputUsername, inputPassword);
+      return result;
     }
   }
 } // end of namespace _module
-class __CallToMain {
-  public static void Main(string[] args) {
-    Dafny.Helpers.WithHaltHandling(() => _module.__default._Main(Dafny.Sequence<Dafny.ISequence<Dafny.Rune>>.UnicodeFromMainArguments(args)));
-  }
-}

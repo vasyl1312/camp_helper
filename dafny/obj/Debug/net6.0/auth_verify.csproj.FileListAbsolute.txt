@@ -3,13 +3,10 @@
 /Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/auth_verify.AssemblyInfoInputs.cache
 /Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/auth_verify.AssemblyInfo.cs
 /Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/auth_verify.csproj.CoreCompileInputs.cache
-/Users/vasylhryts/code/camp_helper/dafny/auth_verify
 /Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/auth_verify.dll
 /Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/ref/auth_verify.dll
 /Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/auth_verify.pdb
 /Users/vasylhryts/code/camp_helper/dafny/auth_verify.deps.json
-/Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/auth_verify.genruntimeconfig.cache
-/Users/vasylhryts/code/camp_helper/dafny/auth_verify.runtimeconfig.json
 /Users/vasylhryts/code/camp_helper/dafny/auth_verify.dll
 /Users/vasylhryts/code/camp_helper/dafny/ref/auth_verify.dll
 /Users/vasylhryts/code/camp_helper/dafny/auth_verify.pdb

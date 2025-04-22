@@ -1,4 +1,5 @@
 const express = require("express");
+const { isAuthorized } = require("../middleware/authUtils");
 const router = express.Router();
 
 router.get("/login", (req, res) => {
@@ -7,8 +8,7 @@ router.get("/login", (req, res) => {
 
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
-
-  if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
+  if (isAuthorized(username, password, process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD)) {
     req.session.isAdmin = true;
     res.redirect("/campdays");
   } else {
