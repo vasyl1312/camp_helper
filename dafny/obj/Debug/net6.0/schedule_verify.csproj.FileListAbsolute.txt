@@ -1,0 +1,12 @@
+/Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/schedule_verify.csproj.AssemblyReference.cache
+/Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/schedule_verify.GeneratedMSBuildEditorConfig.editorconfig
+/Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/schedule_verify.AssemblyInfoInputs.cache
+/Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/schedule_verify.AssemblyInfo.cs
+/Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/schedule_verify.csproj.CoreCompileInputs.cache
+/Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/schedule_verify.dll
+/Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/ref/schedule_verify.dll
+/Users/vasylhryts/code/camp_helper/dafny/obj/Debug/net6.0/schedule_verify.pdb
+/Users/vasylhryts/code/camp_helper/dafny/schedule_verify.deps.json
+/Users/vasylhryts/code/camp_helper/dafny/schedule_verify.dll
+/Users/vasylhryts/code/camp_helper/dafny/ref/schedule_verify.dll
+/Users/vasylhryts/code/camp_helper/dafny/schedule_verify.pdb

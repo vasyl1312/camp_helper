@@ -930,9 +930,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/vasylhryts/code/camp_helper/dafny/auth_verify.csproj",
-      "projectName": "auth_verify",
-      "projectPath": "/Users/vasylhryts/code/camp_helper/dafny/auth_verify.csproj",
+      "projectUniqueName": "/Users/vasylhryts/code/camp_helper/dafny/schedule_verify.csproj",
+      "projectName": "schedule_verify",
+      "projectPath": "/Users/vasylhryts/code/camp_helper/dafny/schedule_verify.csproj",
       "packagesPath": "/Users/vasylhryts/.nuget/packages/",
       "outputPath": "/Users/vasylhryts/code/camp_helper/dafny/obj/",
       "projectStyle": "PackageReference",
