@@ -1,8 +1,11 @@
 <%- include('../partials/header') %>
 
-<h1>AI Idea Generator</h1>
-<form action="/ai/generate" method="POST">
-  <label>Тема дня:</label>
-  <input type="text" name="theme" placeholder="Наприклад: Пірати" required />
-  <button type="submit">Згенерувати ідеї</button>
-</form>
+<main class="ai-generator-container">
+  <h1 class="page-title">AI Idea Generator</h1>
+
+  <form class="ai-form" action="/ai/generate" method="POST">
+    <label for="theme">Тема дня:</label>
+    <input type="text" id="theme" name="theme" placeholder="Наприклад: Спортивний день" required />
+    <button type="submit">Згенерувати ідеї</button>
+  </form>
+</main>

@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <title><%= campDay.title %> - Camp Schedule</title>
     <%- include('../partials/header') %>
+
+    <link rel="stylesheet" href="/styles.css" />
     <script
       src="https://cdn.tiny.cloud/1/rx6xk6mv45iri6dzpeflijn3byyjwl4yp4888s5q313fkgba/tinymce/7/tinymce.min.js"
       referrerpolicy="origin"
@@ -11,46 +13,125 @@
 
     <script>
       tinymce.init({
-        selector: "textarea",
+        selector: "#textarea",
         menubar: false,
         statusbar: false,
-        editable_root: false,
+        readonly: true,
         plugins: "fullscreen",
-        toolbar: "fullscreen ",
+        toolbar: "fullscreen",
       });
     </script>
+
+    <style>
+      .campday-details {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f4f6f8;
+        color: #1f2937;
+        padding: 2rem;
+        max-width: 1200px;
+        margin: 2rem auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .campday-details h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .campday-details textarea {
+        width: 100%;
+        min-height: 600px;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        font-size: 1rem;
+        resize: vertical;
+        background-color: #fff;
+      }
+
+      .campday-details .btn {
+        display: inline-block;
+        margin-top: 1rem;
+        margin-right: 0.75rem;
+        padding: 0.6rem 1.2rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .campday-details .btn-warning {
+        background-color: #f59e0b;
+        color: white;
+      }
+
+      .campday-details .btn-warning:hover {
+        background-color: #d97706;
+      }
+
+      .campday-details .btn-primary {
+        background-color: #3b82f6;
+        color: white;
+      }
+
+      .campday-details .btn-primary:hover {
+        background-color: #2563eb;
+      }
+
+      .campday-details form {
+        display: inline-block;
+        margin-top: 0.5rem;
+      }
+
+      .campday-details form[action*="delete"] button {
+        background-color: #dc2626;
+        color: white;
+      }
+
+      .campday-details form[action*="delete"] button:hover {
+        background-color: #b91c1c;
+      }
+
+      .campday-details a {
+        display: inline-block;
+        margin-top: 2rem;
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      .campday-details a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
+
   <body>
-    <h1><%= campDay.title %></h1>
+    <main class="campday-details">
+      <h1><%= campDay.title %></h1>
 
-    <textarea id="textarea"><%= campDay.description %></textarea>
+      <textarea id="textarea"><%= campDay.description %></textarea>
 
-    <% if (isAdmin) { %>
-    <!-- Кнопка редагування -->
-    <a href="/campdays/<%= campDay._id %>/edit" class="btn btn-warning">Редагувати розклад</a>
+      <% if (isAdmin) { %>
+      <a href="/campdays/<%= campDay._id %>/edit" class="btn btn-warning">Редагувати розклад</a>
 
-    <br />
-    <!-- Кнопка запуску аналізу ШІ -->
-    <form action="/ai/analyze-campday/<%= campDay._id %>" method="POST" style="display: inline">
-      <button type="submit" class="btn btn-primary">Аналізувати цей день за допомогою ШІ</button>
-    </form>
+      <form action="/ai/analyze-campday/<%= campDay._id %>" method="POST">
+        <button type="submit" class="btn btn-primary">Аналізувати цей день за допомогою ШІ</button>
+      </form>
 
-    <br />
-    <!-- Кнопка виклику генерації соцконтенту -->
-    <form action="/ai/social-content" method="POST" style="margin-top: 20px">
-      <input type="hidden" name="campDayId" value="<%= campDay._id %>" />
-      <button type="submit">Згенерувати пост для Instagram / Facebook</button>
-    </form>
+      <form action="/ai/social-content" method="POST" style="margin-top: 10px">
+        <input type="hidden" name="campDayId" value="<%= campDay._id %>" />
+        <button type="submit">Згенерувати пост для Instagram / Facebook</button>
+      </form>
 
-    <br />
-    <br />
+      <form action="/campdays/<%= campDay._id %>/delete" method="POST" style="margin-top: 10px">
+        <button>Delete</button>
+      </form>
+      <% } %>
 
-    <!-- Кнопка видалення -->
-    <form action="/campdays/<%= campDay._id %>/delete" method="POST">
-      <button style="background-color: crimson">Delete</button>
-    </form>
-    <% } %>
-    <br />
-    <a href="/campdays">Back to Camp Days List</a>
+      <a href="/campdays">← Back to Camp Days List</a>
+    </main>
   </body>
 </html>

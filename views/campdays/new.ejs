@@ -15,17 +15,84 @@
     <script>
       tinymce.init({
         selector: "#description",
+        height: 400,
         plugins:
           "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount preview",
         toolbar:
-          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat |preview",
+          "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat | preview",
         setup: function (editor) {
           editor.on("change", function () {
-            tinymce.triggerSave(); // Save the content of the editor to the textarea before form submission
+            tinymce.triggerSave();
           });
         },
       });
     </script>
+
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f9fafb;
+        padding: 2rem;
+        color: #1f2937;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      form {
+        background-color: #ffffff;
+        padding: 2rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        max-width: 700px;
+        margin: auto;
+      }
+
+      label {
+        display: block;
+        margin-top: 1rem;
+        font-weight: 600;
+      }
+
+      input[type="text"],
+      textarea {
+        width: 100%;
+        padding: 0.75rem;
+        margin-top: 0.25rem;
+        border: 1px solid #cbd5e1;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+      }
+
+      button {
+        margin-top: 1.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      button:hover {
+        background-color: #2563eb;
+      }
+
+      a {
+        display: inline-block;
+        margin-top: 1rem;
+        color: #2563eb;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
 
   <body>
@@ -38,15 +105,12 @@
       <textarea
         id="description"
         name="description"
-        rows="5"
         placeholder="Here you can create your schedule, tables, description for activities and add photos or videos"
-      >
-      </textarea>
+      ></textarea>
 
-      <br />
       <button type="submit">Create Camp Day</button>
     </form>
 
-    <br /><a href="/campdays">← Back to Camp Days List</a>
+    <a href="/campdays">← Back to Camp Days List</a>
   </body>
 </html>

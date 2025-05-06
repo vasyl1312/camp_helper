@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>Edit Camp Day</title>
     <%- include('../partials/header') %>
+
     <script
       src="https://cdn.tiny.cloud/1/rx6xk6mv45iri6dzpeflijn3byyjwl4yp4888s5q313fkgba/tinymce/7/tinymce.min.js"
       referrerpolicy="origin"
@@ -18,52 +19,127 @@
           "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat |preview",
         setup: function (editor) {
           editor.on("change", function () {
-            tinymce.triggerSave(); // Save the content of the editor to the textarea before form submission
+            tinymce.triggerSave();
           });
         },
       });
     </script>
+
+    <style>
+      .edit-campday {
+        font-family: "Segoe UI", sans-serif;
+        max-width: 1200px; /* Збільшена максимальна ширина */
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: #f9fafb;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        text-align: center;
+      }
+
+      .edit-campday h1 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #111827;
+      }
+
+      .edit-campday label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 0.5rem;
+        color: #374151;
+      }
+
+      .edit-campday input[type="text"],
+      .edit-campday textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d1d5db;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+        background-color: #ffffff;
+      }
+
+      /* Збільшене поле вводу для опису */
+      .edit-campday textarea {
+        height: 500px; /* Збільшена висота опису */
+        resize: vertical; /* Дозволяє змінювати розмір по вертикалі */
+        padding: 1rem;
+      }
+
+      .edit-campday button {
+        padding: 0.75rem 1.5rem;
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 1.5rem; /* Відступ між полями форми і кнопкою */
+        align-self: center; /* Центрує кнопку по горизонталі */
+        width: auto; /* Автоматична ширина */
+      }
+
+      .edit-campday button:hover {
+        background-color: #2563eb;
+      }
+
+      /* Збільшено саму форму */
+      .edit-campday form {
+        max-width: 1100px; /* Збільшена ширина форми */
+        margin: 0 auto;
+      }
+
+      .edit-campday .ai-suggestions {
+        background: #f3f4f6;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-top: 1.5rem;
+        color: #1f2937;
+      }
+
+      .edit-campday a {
+        display: inline-block;
+        margin-top: 2rem;
+        text-decoration: none;
+        color: #2563eb;
+      }
+
+      .edit-campday a:hover {
+        text-decoration: underline;
+      }
+    </style>
   </head>
+
   <body>
-    <h1>Edit Camp Day</h1>
+    <main class="edit-campday">
+      <h1>Edit Camp Day</h1>
 
-    <form action="/campdays/<%= campDay._id %>?_method=PUT" method="POST">
-      <label for="title">Edit Title (Theme of the Day):</label><br />
-      <input
-        type="text"
-        id="title"
-        name="title"
-        value="<%= campDay.title %>"
-        required
-      /><br /><br />
+      <form action="/campdays/<%= campDay._id %>?_method=PUT" method="POST">
+        <label for="title">Edit Title (Theme of the Day):</label>
+        <input type="text" id="title" name="title" value="<%= campDay.title %>" required />
 
-      <label for="description">Edit Description:</label><br />
-      <textarea
-        id="description"
-        name="description"
-        rows="5"
-        placeholder="Here you can create your schedule, tables, description for activities and add photos or videos"
-      >
-<%= campDay.description %>
-    </textarea
-      >
+        <label for="description">Edit Description:</label>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Here you can create your schedule, tables, description for activities and add photos or videos"
+        >
+<%= campDay.description %></textarea
+        >
 
-      <button type="submit">Save Changes</button>
-    </form>
+        <button type="submit">Save Changes</button>
+      </form>
 
-    <!-- Блок з пропозиціями від AI -->
-    <% if (typeof aiResponse !== "undefined") { %>
-    <hr />
-    <h2>AI Suggestions:</h2>
-    <div style="background: #f0f0f0; padding: 15px; border-radius: 8px"><%= aiResponse %></div>
-    <br />
-    <% } %>
+      <% if (typeof aiResponse !== "undefined") { %>
+      <hr />
+      <h2>AI Suggestions:</h2>
+      <div class="ai-suggestions"><%= aiResponse %></div>
+      <% } %>
 
-    <!-- Кнопка для аналізу дня ШІ -->
-    <form action="/ai/analyze-campday/<%= campDay._id %>" method="POST">
-      <button type="submit">Analyze this day with AI</button>
-    </form>
-
-    <br /><a href="/campdays">← Back to Camp Days List</a>
+      <a href="/campdays">← Back to Camp Days List</a>
+    </main>
   </body>
 </html>

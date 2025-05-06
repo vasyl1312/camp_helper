@@ -63,8 +63,8 @@ router.post("/analyze-campday/:id", isAdmin, async (req, res) => {
     const scheduleText = campDay.schedule;
 
     const systemPrompt =
-      "Ти досвідчений організатор дитячих таборів. Проаналізуй опис дня та запропонуй покращення або цікаві зміни.";
-    const userPrompt = `Ось опис дня:\n\n${scheduleText}\n\nПроаналізуй його та запропонуй покращення.`;
+      "Ти досвідчений організатор дитячих таборів. Проаналізуй опис дня та запропонуй покращення або цікаві зміни саме цього дню який я тобі даю.";
+    const userPrompt = `Ось опис дня:\n\n${scheduleText}\n\nПроаналізуй саме його та запропонуй покращення.`;
 
     const aiResponse = await askAI(systemPrompt, userPrompt);
 

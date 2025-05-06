@@ -25,6 +25,4 @@ class CampDay {
       i := i + 1;
     }
   }
-
-
 }

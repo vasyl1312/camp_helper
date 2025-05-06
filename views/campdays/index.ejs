@@ -1,17 +1,19 @@
 <%- include('../partials/header') %>
 
-<h1>Camp Days</h1>
+<main class="campdays-container">
+  <h1 class="campdays-title">Camp Days</h1>
 
-<% if (isAdmin) { %>
-<a href="/campdays/new">+ New Camp Day</a>
-<% } %>
-
-<ul>
-  <% if (days.length === 0) { %>
-  <p>No camp days found.</p>
-  <% } %> <% days.forEach(day => { %>
-  <li>
-    <a href="/campdays/<%= day._id %>"><%= day.title %></a>
-  </li>
-  <% }) %>
-</ul>
+  <% if (isAdmin) { %>
+  <a class="btn-new-day" href="/campdays/new">+ New Camp Day</a>
+  <% } %> <% if (days.length === 0) { %>
+  <p class="no-days">No camp days found.</p>
+  <% } else { %>
+  <ul class="campdays-list">
+    <% days.forEach(day => { %>
+    <li class="campday-item">
+      <a href="/campdays/<%= day._id %>" class="campday-link"><%= day.title %></a>
+    </li>
+    <% }) %>
+  </ul>
+  <% } %>
+</main>
